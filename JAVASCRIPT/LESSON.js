@@ -9,6 +9,31 @@ console.log();
 let name = prompt("あなたの名前は何ですか？");
 console.log("こんにちは、" + name + "さん！");
 
+/* 
+/ html
+HTMLフォームを使用して、ユーザーに入力フィールドを表示し、それをJavaScriptで取得
+
+<input type="text" id="nameInput">
+<button onclick="showGreeting()">名前を入力</button>
+<script>
+    function showGreeting() {
+        let name = document.getElementById("nameInput").value;
+        console.log("こんにちは、" + name + "さん！");
+    }
+</script>
+//
+イベントリスナーを使用して、ユーザーが特定のアクション（ボタンのクリックなど）
+を実行した際に、関数を呼び出して入力を処理
+
+<input type="text" id="nameInput">
+<button id="submitButton">名前を入力</button>
+<script>
+    document.getElementById("submitButton").addEventListener("click", function() {
+        let name = document.getElementById("nameInput").value;
+        console.log("こんにちは、" + name + "さん！");
+    });
+</script>
+*/
 
 // if문
 let age = 20;

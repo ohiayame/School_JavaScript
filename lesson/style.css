@@ -1,0 +1,33 @@
+h1{
+    color: rgb(247, 134, 170);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-color: azure;
+}
+
+
+.full-screen {
+    background-color:rgb(177, 216, 217);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.hachi-maru-pop-regular {
+    font-family: "Hachi Maru Pop", cursive;
+    font-weight: 400;
+    font-style: normal;
+    margin-bottom: 0;
+}
+.hachi-maru-pop-regular-2 {
+    font-family: "Hachi Maru Pop", cursive;
+    font-weight: 400;
+    font-style: normal;
+    margin-bottom: 0;
+}
+.myButton {
+    background-color:floralwhite;
+    color: rgb(141, 108, 62); /* ボタンのテキスト色を白色に設定 */
+}
+
+* カーソルをポインターに変更 */
