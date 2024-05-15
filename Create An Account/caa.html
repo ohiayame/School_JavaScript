@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+</head>
+<body>
+    <h1>Create An Account</h1>
+    <form id="myForm">
+        <div>
+            <!-- テキストを表示 -->
+            <span class="input-label">First name</span>
+            <!-- 入力ボックス -->
+            <input type="text" id="textInput" name="First name" placeholder="First name">
+        </div>
+
+        <div>
+            <!-- テキストを表示 -->
+            <span class="input-label">Last name</span>
+            <!-- 入力ボックス -->
+            <input type="text" id="textInput" name="Last name" placeholder="Last name">
+        </div>
+
+        <div>
+            <!-- テキストを表示 -->
+            <span class="input-label">Email</span>
+            <!-- 入力ボックス -->
+            <input type="Email" id="textInput" name="Email" placeholder="Email">
+        </div>
+
+        <div>
+            <!-- テキストを表示 -->
+            <span class="input-label">Username</span>
+            <!-- 入力ボックス -->
+            <input type="text" id="textInput" name="Username" placeholder="Username">
+        </div>
+
+        <div>
+            <!-- テキストを表示 -->
+            <span class="input-label">Password</span>
+            <!-- 入力ボックス -->
+            <input type="text" id="textInput" name="Password" placeholder="Password">
+        </div>
+
+        <div>
+            <span class="input-label">Birth date</span>
+            <input type="date" id="dateInput" name="birth date" lang="" >
+        </div>
+
+
+        <div>
+            <span class="input-label">How happy are you</span>
+            <input type="range" min="0" max="10" id="happy" list="markers">
+        </div>
+    
+        <div>
+            <span class="input-label">What is your fav. color?</span>
+            <input type="color" id="colorInput" name="color">
+        </div>
+
+        <button onclick="myFunction()">Create Account</button>
+
+        <datalist id="markers">
+            <option value="0"></option>
+            <option value="1"></option>
+            <option value="2"></option>
+            <option value="3"></option>
+            <option value="4"></option>
+            <option value="5"></option>
+            <option value="6"></option>
+            <option value="7"></option>
+            <option value="8"></option>
+            <option value="9"></option>
+            <option value="10"></option>
+        </datalist>
+    </form>
+</body>
+</html>
