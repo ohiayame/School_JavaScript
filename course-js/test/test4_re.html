@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="number" id="counter1" placeholder="0" />
+    <button id="btn1">Start</button>
+    <input type="number" id="counter2" placeholder="0" />
+    <button id="btn2">Start</button>
+    <input type="number" id="counter3" placeholder="0" />
+    <button id="btn3">Start</button>
+    <script>
+      const counter1 = document.getElementById("counter1");
+      const button1 = document.getElementById("btn1");
+      const counter2 = document.getElementById("counter2");
+      const button2 = document.getElementById("btn2");
+      const counter3 = document.getElementById("counter3");
+      const button3 = document.getElementById("btn3");
+
+      function makerCounter(argButton, argCounter) {
+        // member variable
+        let count = 0;
+        let isRunning = false;
+        let timerId = null;
+        const button = argButton;
+        const counter = argCounter;
+
+        return function () {
+          // 시작
+          if (!isRunning) {
+            timerId = setInterval(function () {
+              // 카운트 값 1증가
+              count++;
+              // 화면 출력
+              counter.value = count;
+            }, 1000);
+
+            // 버튼의 글자 -> 실행
+            button.textContent = "STOP";
+
+            isRunning = true;
+            // 종료
+          } else {
+            // 타이머 종료
+            clearInterval(timerId);
+
+            // 버튼의 글자 -> 시작
+            button.textContent = "START";
+
+            isRunning = false;
+          }
+        };
+      }
+
+      button1.addEventListener("click", makerCounter(button1, counter1));
+      button2.addEventListener("click", makerCounter(button2, counter2));
+      button3.addEventListener("click", makerCounter(button3, counter3));
+    </script>
+  </body>
+</html>

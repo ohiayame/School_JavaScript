@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="button" id="btn1" value="ON" />
+    <input type="button" id="btn2" value="ON" />
+    <script>
+      function MakeToggleHandler(btn) {
+        let isOn = true;
+
+        return function toggle() {
+          isOn = !isOn;
+          btn.value = isOn ? "ON" : "OFF";
+          btn.style.backgroundColor = isOn ? "gray" : "blue";
+        };
+      }
+
+      const btn1 = document.getElementById("btn1");
+      btn1.addEventListener("click", MakeToggleHandler(btn1));
+
+      const btn2 = document.getElementById("btn2");
+      btn2.onclick = MakeToggleHandler(btn2);
+    </script>
+  </body>
+</html>

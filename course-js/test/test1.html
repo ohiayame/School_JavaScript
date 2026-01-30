@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="button" value="Count 1" onclick="counter1()" />
+    <input type="button" value="Count 2" onclick="counter2()" />
+    <script>
+      function makerCounter() {
+        let count = 1;
+        function counter() {
+          alert(count);
+          count++;
+        }
+        return counter;
+      }
+
+      const counter1 = makerCounter();
+      const counter2 = makerCounter();
+      console.log(counter1.env.count)
+      /* const counters = new Map();
+      function createCount(e) {
+        const key = e.target.value;
+        // 없으면 새로운 함수 생성
+        if (!counters.has(key)) {
+          counters.set(key, countFunc());
+        }
+        // counter 실행
+        counters.get(key)();
+        
+      }
+        */
+    </script>
+  </body>
+</html>

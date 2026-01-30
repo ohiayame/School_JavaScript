@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Document</title>
+  </head>
+
+  <body>
+    <button id="add">커운터 추가</button>
+    <div id="list"></div>
+    <span id="count">총 카운터 개수: 0</span>
+
+    <script>
+      const addButton = document.getElementById("add");
+      const list = document.getElementById("list");
+
+      function countMaker() {
+        // 요소 생성
+        const button = document.createElement("button");
+        button.textContent = "START";
+        const counter = document.createElement("input");
+        counter.type = "number";
+        counter.value = 0;
+
+        // 상태
+        let count = counter.value;
+        // [버튼 클릭 시 실행]
+        let timerId = null;
+        function setI() {
+          // start
+          if (timerId == null) {
+            // button-> stop
+            button.textContent = "STOP";
+            // setInterval -> 1씩 증가
+            timerId = setInterval(() => {
+              // 1씩 증가
+              count++;
+              counter.value = count;
+            }, 1000);
+          }
+          // stop
+          else {
+            // clearInterval
+            // button-> start
+            clearInterval(timerId);
+            timerId = null;
+            button.textContent = "START";
+          }
+        }
+        // 버튼 클릭시 setI호출
+        button.addEventListener("click", setI);
+
+        // 하나로 묶어서 반환
+        const li = document.createElement("div");
+        li.appendChild(counter);
+        li.appendChild(button);
+
+        return li;
+      }
+
+      // 카운터 개수
+      let lenList = 0;
+      const c = document.getElementById("count");
+
+      // 추가 버튼이 클릭되면 커운터 만들기
+      addButton.addEventListener("click", () => {
+        // 카운터 생성
+        list.appendChild(countMaker());
+        // 총 카운터 개수
+        c.textContent = `총 카운터 개수: ${++lenList}`;
+      });
+    </script>
+  </body>
+</html>

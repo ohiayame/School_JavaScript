@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- 입력 받기 -->
+    <div>
+      <input type="text" id="txt" />
+      <button id="add">추가</button>
+    </div>
+    <!-- 출력 ul -->
+    <ul id="list"></ul>
+
+    <script>
+      const txt = document.getElementById("txt");
+      const addButton = document.getElementById("add");
+      const list = document.getElementById("list");
+
+      function createli(text) {
+        // 내용, 입력 창, 수정, 저장, 취소, 삭제
+        const check = document.createElement("input");
+        check.type = "checkbox";
+        const span = document.createElement("span");
+        span.textContent = text;
+        const input = document.createElement("input");
+        input.type = "text";
+        input.value = text;
+        input.style.display = "none";
+        const btnEdit = document.createElement("button");
+        btnEdit.textContent = "수정";
+        const btnSave = document.createElement("button");
+        btnSave.textContent = "저장";
+        btnSave.style.display = "none";
+        const btnCancel = document.createElement("button");
+        btnCancel.textContent = "취소";
+        btnCancel.style.display = "none";
+        const btnDel = document.createElement("button");
+        btnDel.textContent = "삭제";
+
+        function enterEditMode() {
+          prevText = span.textContent; // 초기화
+          input.value = prevText;
+          span.style.display = "none";
+          input.style.display = "";
+          btnEdit.style.display = "none";
+          btnSave.style.display = "";
+          btnCancel.style.display = "";
+          btnDel.disabled = true; // 비 활성화
+
+          input.focus();
+          input.select();
+        }
+
+        function exitEditMode() {
+          span.style.display = "";
+          input.style.display = "none";
+          btnEdit.style.display = "";
+          btnSave.style.display = "none";
+          btnCancel.style.display = "none";
+          btnDel.disabled = false;
+        }
+
+        btnEdit.addEventListener("click", enterEditMode);
+        // ====  수정 내용 저장  ====
+        btnSave.addEventListener("click", () => {
+          // -> 입력 내용이 있으면 textContent에 저장
+          const value = input.value.trim();
+          if (!value) return;
+          span.textContent = value;
+          exitEditMode();
+        });
+        // ====  수정 취소  ====
+        btnCancel.addEventListener("click", () => {
+          span.textContent = text;
+          exitEditMode();
+        });
+
+        const li = document.createElement("li");
+        li.appendChild(check);
+        li.appendChild(span);
+        li.appendChild(input);
+        li.appendChild(document.createTextNode(" "));
+        li.appendChild(btnEdit);
+        li.appendChild(btnSave);
+        li.appendChild(btnCancel);
+        li.appendChild(btnDel);
+
+        return li;
+      }
+      // 추가 클릭시 리스트 요소 추가
+      addButton.addEventListener("click", () => {
+        const inputTxt = txt.value.trim();
+        if (!inputTxt) return;
+        list.appendChild(createli(inputTxt));
+        txt.value = "";
+        txt.focus();
+      });
+    </script>
+  </body>
+</html>

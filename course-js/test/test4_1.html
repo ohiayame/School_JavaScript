@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Document</title>
+  </head>
+
+  <body>
+    <input type="number" id="counter" placeholder="0" />
+    <button id="btn">START</button>
+
+    <script>
+      const button = document.getElementById("btn");
+      const counter = document.getElementById("counter");
+      let count = 0;
+
+      // 실행 함수
+      function setI() {
+        // 현재 상태 확인
+        let isRunning = button.textContent == "START" ? true : false;
+        // start
+        if (isRunning) {
+          // 버튼 글 -> stop
+          button.textContent = "STOP";
+          // setInterval -> 1씩 증가 함수 호출
+          let timerId = setInterval(() => {
+            count++;
+            counter.value = count;
+          }, 1000);
+        }
+        // stop
+        else {
+          // clearInterval
+          // 버튼 글 -> start
+          clearInterval(timerId);
+          button.textContent = "START";
+        }
+      }
+      button.addEventListener("click", setI);
+    </script>
+  </body>
+</html>
