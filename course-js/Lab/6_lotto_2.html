@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>로또 번호 맞추기 - 실습</title>
+    <style>
+      body {
+        font-family: Arial;
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+      }
+      h1 {
+        text-align: center;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(5, 50px) 80px;
+        gap: 5px;
+        margin: 20px 0;
+      }
+      .grid input {
+        width: 50px;
+        height: 40px;
+        text-align: center;
+        font-size: 16px;
+      }
+      .grid .count {
+        line-height: 40px;
+        text-align: center;
+        font-weight: bold;
+      }
+
+      .match {
+        background: #ffeb3b;
+        color: #d32f2f;
+        font-weight: bold;
+      }
+
+      button {
+        display: block;
+        margin: 20px auto;
+        padding: 15px 30px;
+        font-size: 18px;
+        background: #4a90d9;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #357abd;
+      }
+
+      .result {
+        text-align: center;
+        margin: 20px 0;
+        padding: 15px;
+        background: #f5f5f5;
+        border-radius: 5px;
+      }
+      .result .numbers {
+        font-size: 24px;
+        font-weight: bold;
+        color: #d32f2f;
+      }
+      .row-label {
+        line-height: 40px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>로또 번호 맞추기</h1>
+
+    <!-- 5x5 입력 그리드가 생성될 영역 -->
+    <div id="grid"></div>
+
+    <!-- 버튼 클릭 시 generateLotto() 함수 호출 -->
+    <button onclick="generateLotto()">로또 번호 생성</button>
+
+    <!-- 당첨 번호 결과 표시 영역 (초기에는 숨김) -->
+    <div class="result" id="result" style="display: none">
+      <p>당첨 번호</p>
+      <p class="numbers" id="lottoNumbers"></p>
+    </div>
+
+    <script>
+        // grid, rows, cols 갯수 정의
+        const ROWS = 5;
+        const COLS = 5;
+        const grid = document.getElementById('grid');
+        // createGrid() 함수 정의
+        function createGrid(){
+            // [for row]
+            for(let row = 0; row < ROWS; row++){
+                //  행 정의 -> label
+                // -> div, className:'row-input', textContext:`${row + 1}행`
+                const label = document.createElement('div');
+                label.className = 'row-input';
+                label.textContext = `${row + 1}행`;
+                // grid에 추가
+                grid.appendChild(label);
+                
+                // [for col]
+                for(let col = 0; col < COLS; col++){
+                    //  각 cell 정의 -> input
+                    const input = document.createElement('input');
+                    // -> input, 
+                    // type:'number', min:1, max:45, dataset.row:row, id:`cell-${row}-${col}`
+                    input.type = 'number';
+                    input.min = 1;
+                    input.max = 45;
+                    input.dataset.row = row;
+                    input.id = `cell-${row}-${col}`
+                    // grid에 추가
+                    grid.appendChild(input);
+                }
+                // 맞춘 개수 표시 -> count
+                // -> div, className:'count', id:`count-${row}`, textContent:'-'
+                const count = document.createElement('div');
+                count.className = 'count';
+                count.id = `count-${row}`
+                count.textContent = '-'
+                // grid에 추가
+                grid.appendChild(count)
+            }
+        }
+        // generateLotto() 함수 정의
+        function generateLotto(){
+            // input 요소에서 match인 값을 초기화
+            document.querySelectorAll('input').forEach(input => {
+                input.classList.remove('match');
+            });
+            
+            // 당첨 번호 생성
+            let lottoNumbers = []
+            // 중복 없는 6개의 랜덤 값의 배열 생성 -> sort
+            while(lottoNumbers.length < 6){
+                const num = Math.floor(Math.random() * 45) + 1
+                if(!lottoNumbers.includes(num)){
+                    lottoNumbers.push(num)
+                }
+            }
+            lottoNumbers.sort((a, b) => a-b)
+            
+            // 당첨 번호 표시 
+            // id:result -> style = 'block'
+            document.getElementById('result').style.display = 'block';
+            // 당첨 번호 출력
+            // -> id:lottoNumbers -> textContent = lottoNumbers.join(', ');
+            document.getElementById('lottoNumbers').textContent = lottoNumbers.join(', ');
+            
+            // 각 행별 검사
+            // [for row]
+            for (let row = 0; row < ROWS; row++) {
+                // matchCount 초기화 -> 당첨 개수 새우기
+                let matchCount = 0;
+                // rowNumbers 초기화 -> 각 행의 입력 값 배열
+                let rowNumbers = [];
+                
+                // [for col]
+                for (let col = 0; col < COLS; col++) {
+                    // 입력 값 정의
+                    const input = document.getElementById(`cell-${row}-${col}`);
+                    // -> parseInt로 변환
+                    const value = parseInt(input.value);
+                    
+                    // 만약에 값이 1~45 사이 
+                    if(value >= 1 && value <= 45){
+                        // 중복 값이 rowNumbers에 있으면 alert 출력 -> return
+                        if(rowNumbers.includes(value)){
+                            alert(`${row + 1}행에 중복된 숫자(${value})가 있습니다!`);
+                            return;
+                        }
+                        // rowNumbers에 값 추가
+                        rowNumbers.push(value);
+                    
+                        // 만약에 당첨 번호(lottoNumbers)에 값이 존재 하면 
+                        if(lottoNumbers.includes(value)){
+                            // -> 해딩 값에 classList.add:'match', matchCount +1
+                            input.classList.add('match');
+                            matchCount++;
+                        }
+                    }
+                }
+                // id: `count-${row}`의 textContent에 matchCount 대입
+                document.getElementById(`count-${row}`).textContext = `${matchCount}개`
+            }
+        }
+        // createGrid 호출
+        createGrid()
+    </script>
+  </body>
+</html>
